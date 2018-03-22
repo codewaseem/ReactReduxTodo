@@ -16,13 +16,13 @@ const apiResponse = ({
 const api = {
   get: (path) => {
     const id = path.split('/')[2]
-
+    console.log("id", id, fakeDB.lists);
     let data
     if (typeof id === 'undefined') {
       if (path.match(/lists/g)) {
-        data = {lists: fakeDB.lists}
+        data = { lists: fakeDB.lists }
       } else {
-        data = {todos: fakeDB.todos}
+        data = { todos: fakeDB.todos }
       }
     } else {
       if (path.match(/lists/g)) {
@@ -80,7 +80,7 @@ const api = {
 
       fakeDB.lists.push(list)
 
-      return apiResponse({data: { list }})
+      return apiResponse({ data: { list } })
     } else {
       if (typeof data.text === 'undefined' || typeof data.listID === 'undefined') {
         return apiResponse({
@@ -96,7 +96,7 @@ const api = {
 
       fakeDB.todos.push(todo)
 
-      return apiResponse({data: { todo }})
+      return apiResponse({ data: { todo } })
     }
   },
 
@@ -106,14 +106,14 @@ const api = {
     let todo = fakeDB.todos.find(i => i.id === id)
 
     if (typeof todo === 'undefined') {
-      todo = createTodo({...data, id})
+      todo = createTodo({ ...data, id })
     } else {
       Object.keys(data).map(key => {
         todo[key] = data[key]
       })
     }
 
-    return apiResponse({data: { todo }})
+    return apiResponse({ data: { todo } })
   }
 }
 
@@ -123,14 +123,14 @@ export default api
  * Factories
  */
 
-function createList (data) {
+function createList(data) {
   return Object.assign({}, {
     id: v4(),
     createdAt: new Date()
   }, data)
 }
 
-function createTodo (data) {
+function createTodo(data) {
   return Object.assign({}, {
     id: v4(),
     createdAt: new Date(),

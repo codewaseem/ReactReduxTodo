@@ -44,6 +44,7 @@ export const getChildEntities = (childType, parentType, parentId) => createSelec
   state => fromById.getEntity(state[parentType].byId, parentId),
   (state, parent) => {
     if (parent && parent[childType]) {
+      console.log("getCHild", parent[childType]);
       return parent[childType].map(id => fromById.getEntity(state[childType].byId, id))
     }
   }

@@ -1,5 +1,4 @@
 import { put, fork, call, take } from 'redux-saga/effects'
-
 import { normalize } from 'normalizr'
 
 import api from 'config/api'
@@ -41,12 +40,22 @@ export function* addList() {
   }
 }
 
+export function* getTodosByListId() {
+  while (true) {
+    const action = yield take(t.FETCH_ENTITY)
+    const response = yield call(api.get, `/lists/${action.payload.listID}`)
+    console.log("RESPONSE", response);
+    yield fork(receiveResponse, response);
+  }
+}
+
 /*
  * Watchers
  */
 
 export default function* watchList() {
   yield [
+    fork(getTodosByListId),
     fork(addList),
   ]
 }

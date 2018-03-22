@@ -25,17 +25,16 @@ export function* receiveResponse(response) {
   }
 }
 
+
 export function* addTodo() {
   while (true) {
     const action = yield take(t.SUBMIT_ENTITY)
     if (action.meta && action.meta.type === 'todos') {
-      console.log("TOOOOODO ACTION", action.payload)
       const todo = {
         ...action.payload,
       }
 
       const response = yield call(api.post, '/todos', { ...todo })
-      console.log("RESPONSE", response);
       yield fork(receiveResponse, response)
     }
   }

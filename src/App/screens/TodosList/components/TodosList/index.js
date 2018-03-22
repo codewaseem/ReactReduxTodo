@@ -18,7 +18,7 @@ const TodosList = ({ todosList, handleClick }) => {
           <TodosListItem
             key={i}
             {...todoListItem}
-            toggle={handleClick}
+            handleClick={handleClick}
             isLast={(todosList.length - 1) === i}
           />
         )
