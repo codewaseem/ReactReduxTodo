@@ -8,6 +8,7 @@ import * as storage from 'redux-storage'
 import createEngine from 'redux-storage-engine-localstorage'
 
 import config from 'config'
+import window from 'utils/windowOrGlobal'
 
 import appReducers from 'App/stores'
 import appSagas from 'App/stores/sagas'
@@ -50,7 +51,7 @@ enhancers.push(applyMiddleware(...middlewares))
 
 export default function configureStore (initialState, callback) {
   // compose store
-  const store = compose(...enhancers)(createStore)(wrappedReducer, initialState)
+  const store = compose(...enhancers)(createStore)(wrappedReducer, initialState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
   // load store
   if (typeof callback !== 'undefined') {

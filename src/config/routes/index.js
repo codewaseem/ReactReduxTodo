@@ -18,6 +18,12 @@ const Todos = (nextState, cb) => {
     .catch((e) => { throw e })
 }
 
+const TodosList = (nextState, cb) => {
+  System.import('App/screens/TodosList')
+    .then(module => cb(null, module.default))
+    .catch((e) => { throw e })
+}
+
 // We use `getComponent` to dynamically load routes.
 // https://github.com/reactjs/react-router/blob/master/docs/guides/DynamicRouting.md
 const routes = (
@@ -30,7 +36,7 @@ const routes = (
 // routes so we need to require them here as a workaround.
 // https://github.com/gaearon/react-hot-loader/issues/288
 if (module.hot) {
-  require('App/screens/Todos')
+  require('App/screens/TodosList')
 }
 
 export default routes
