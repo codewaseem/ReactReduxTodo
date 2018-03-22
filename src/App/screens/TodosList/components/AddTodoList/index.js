@@ -11,7 +11,7 @@ const AddTodoList = ({ handleSubmit }) => {
           <Field
             className='f6 f5-l input-reset fl black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2 br--left ba b--light-silver'
             placeholder='My new todo list'
-            name='todoList'
+            name='name'
             type='text'
             component='input'
           />

@@ -10,14 +10,15 @@ import TodosList from './components/TodosList'
 const TodosLists = ({ todosList, addTodoList, handleClick }) => {
   return (
     <section className='pa3 pa5-ns'>
-      <AddTodoList onSubmit={({ todo }, _, { reset }) => {
-        addTodoList(todoList)
+      <AddTodoList onSubmit={( {name} , _, { reset }) => {
+        console.log("list",name)
+        addTodoList(name)
         reset()
       }} />
 
       <h1 className='f4 bold center mw6'>All Todos Lists</h1>
 
-      <TodosList {...{ todosList, toggleTodo }} />
+      <TodosList {...{ todosList, handleClick }} />
     </section>
   )
 }
@@ -31,7 +32,7 @@ export default connect(
     todosList: getEntities('lists')(state)
   }),
   dispatch => ({
-    addTodoList: (text) => console.log("Adding todos"),
+    addTodoList: (name) => dispatch(actions.submitEntity({ name }, {type: 'lists'})),
     handleClick: (todo, completed) => console.log("routing")
   })
 )(TodosLists)
