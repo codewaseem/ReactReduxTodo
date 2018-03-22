@@ -13,40 +13,40 @@ import * as schema from '../schema'
  * Subroutines
  */
 
-export function* receiveResponse (response) {
+export function* receiveResponse(response) {
   if (response.ok) {
     const todo = normalize(response.data.todo, schema.todo)
 
-    yield put(actions.setEntity(todo, {type: 'todos'}))
+    yield put(actions.setEntity(todo, { type: 'todos' }))
   } else {
     const error = response.data.error
 
-    yield put(actions.requestFailure(error, {type: 'todos'}))
+    yield put(actions.requestFailure(error, { type: 'todos' }))
   }
 }
 
-export function* addTodo () {
+export function* addTodo() {
   while (true) {
     const action = yield take(t.SUBMIT_ENTITY)
     if (action.meta && action.meta.type === 'todos') {
+      console.log("TOOOOODO ACTION", action.payload)
       const todo = {
         ...action.payload,
-        listID: 1 // Change this to support multiple lists
       }
 
-      const response = yield call(api.post, '/todos', {...todo})
-
+      const response = yield call(api.post, '/todos', { ...todo })
+      console.log("RESPONSE", response);
       yield fork(receiveResponse, response)
     }
   }
 }
 
-export function* toggleTodo () {
+export function* toggleTodo() {
   while (true) {
     const action = yield take(t.UPDATE_ENTITY)
     if (action.meta && action.meta.type === 'todos') {
       const todo = action.payload
-      const response = yield call(api.put, `/todos/${todo.id}`, {...todo})
+      const response = yield call(api.put, `/todos/${todo.id}`, { ...todo })
 
       yield fork(receiveResponse, response)
     }
@@ -57,7 +57,7 @@ export function* toggleTodo () {
  * Watchers
  */
 
-export default function* watchTodos () {
+export default function* watchTodos() {
   yield [
     fork(addTodo),
     fork(toggleTodo)
